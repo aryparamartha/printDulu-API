@@ -69,11 +69,10 @@ class UserController extends Controller
     public function login(request $request){
         if(Auth::attempt(['email'=>request('email'), 'password' => request('password')])){
             $user = Auth::user();
-            $token = $user->createToken('MyApp')->accessToken;
-            $user = $request->User();
-            return response()->json(
-                ['token' => $token,'user' => $user], $this->successStatus
-            );
+            $token = $user->createToken('MyApp');
+            $user->token = $token->accessToken;
+            
+            return response()->json($user, $this->successStatus);
         } else {
             return response()->json(['error'=>'Unathorized'], 401);
         }
@@ -84,6 +83,12 @@ class UserController extends Controller
             Auth::user()->AauthAccessToken()->delete();
             return "Logout berhasil";
         }
+    }
+
+    public function profile(){
+        $user = request()->user();
+
+        return $user;
     }
 
 }
