@@ -32,6 +32,8 @@ Route::post('sendNotification', 'NotificationController@sendNotification');
 Route::group(['middleware' => 'auth:api'], function(){
 	Route::get('user/profile', 'UserController@profile');
 	Route::post('user/profile', 'UserController@edit_profile'); //inget edit fungsinya yg setelah @
+    Route::get('user/vendor','UserController@showVendor');
+    Route::get('user/trans', 'UserController@showTransaction');
 });
 
 

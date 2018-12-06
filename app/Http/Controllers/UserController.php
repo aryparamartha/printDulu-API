@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Transaction;
 use Validator;
 use Carbon\Carbon;
 
@@ -89,6 +90,24 @@ class UserController extends Controller
         $user = request()->user();
 
         return $user;
+    }
+
+    public function showVendor(){
+        $vendor = User::where('admin_status',1)->get();
+
+        return $vendor;
+    }
+
+    public function showTransaction(){
+        $user = request()->user();
+
+        $trans = Transaction::select('trans_det.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
+            ->join('trans_det', 'transactions.id','=','trans_det.id_trans')
+            ->join('users','users.id','=','transactions.id_user')
+            ->where('users.id',$user['id'])
+            ->get();
+
+            return $trans;
     }
 
 }
