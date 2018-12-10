@@ -48,6 +48,13 @@ class UserController extends Controller
         $phone = $request->phone;
         $password = $request->password;
         $username = $request->username;
+        if ($request->hasFile('profile_pic')){
+            $profile_pic = $request->file('profile_pic');
+            $profile_pic->move('public/berkas', $profile_pic->getClientOriginalName());
+            $pic_name = $profile_pic->getCLientOriginalName();
+        } else {
+            $pic_name = 'trihard.jpg';
+        }
         
         $user = User::find($id);
         $user->name = $name;
@@ -55,6 +62,7 @@ class UserController extends Controller
         $user->phone = $phone;
         $user->password = $password;
         $user->username = $username;
+        $user->profile_pic = '/public/berkas/'.$pic_name;
         $user->save();
 
         return "Data berhasil di update";

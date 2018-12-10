@@ -26,6 +26,7 @@ Route::get('/user', 'UserController@index');
 Route::post('/user/register', 'UserController@create');
 Route::post('/user/login', 'UserController@login');
 Route::get('/user/logout', 'UserController@logout');
+Route::post('user/update', 'UserController@update');
 
 Route::post('sendNotification', 'NotificationController@sendNotification');
 
@@ -34,7 +35,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('user/profile', 'UserController@edit_profile'); //inget edit fungsinya yg setelah @
     Route::get('user/vendor','UserController@showVendor');
     Route::get('user/trans', 'UserController@showTransaction');
-    Route::get('vendor/trans','UserController@showTransactionVendor');
+    Route::get('vendor/trans', 'UserController@showTransactionVendor');
 });
+
+Route::post('upload/add', 'UploadController@addFile');
 
 
