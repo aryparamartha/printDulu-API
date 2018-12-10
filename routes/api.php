@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 	Route::post('user/profile', 'UserController@edit_profile'); //inget edit fungsinya yg setelah @
     Route::get('user/vendor','UserController@showVendor');
     Route::get('user/trans', 'UserController@showTransaction');
+    Route::get('vendor/trans','UserController@showTransactionVendor');
 });
 
 

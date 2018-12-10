@@ -106,8 +106,16 @@ class UserController extends Controller
             ->join('users','users.id','=','transactions.id_user')
             ->where('users.id',$user['id'])
             ->get();
-
             return $trans;
     }
 
+    public function showTransactionVendor(){
+        $user = request()->user();
+        $trans = Transaction::select('trans_det.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
+            ->join('trans_det', 'transactions.id','=','trans_det.id_trans')
+            ->join('users','users.id','=','transactions.id_user')
+            ->where('transactions.id_vendor',$user['id'])
+            ->get();
+            return $trans;
+    }
 }
