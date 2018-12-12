@@ -40,4 +40,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 Route::post('upload/add', 'UploadController@addFile');
 
+Route::post('/trans/create', 'TransactionController@create');
+
 
