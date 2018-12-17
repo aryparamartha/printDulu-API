@@ -8,6 +8,6 @@
     "\\app\\Providers",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\User.php",
+  "SelectedNode": "\\app\\Http\\Controllers\\UserController.php",
   "PreviewInSolutionExplorer": false
 }

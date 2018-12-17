@@ -42,30 +42,32 @@ class UserController extends Controller
         return "Data user berhasil disimpan";
     }
 
-    public function update(request $request, $id){
+    public function edit_profile(request $request, $id){
         $name = $request->name;
         $email = $request->email;
         $phone = $request->phone;
         $password = $request->password;
         $username = $request->username;
-        if ($request->hasFile('profile_pic')){
-            $profile_pic = $request->file('profile_pic');
-            $profile_pic->move('public/berkas', $profile_pic->getClientOriginalName());
-            $pic_name = $profile_pic->getCLientOriginalName();
-        } else {
-            $pic_name = 'trihard.jpg';
-        }
+        $address = $request->address;
+        //if ($request->hasFile('profile_pic')){
+        //    $profile_pic = $request->file('profile_pic');
+        //    $profile_pic->move('public/berkas', $profile_pic->getClientOriginalName());
+        //    $pic_name = $profile_pic->getCLientOriginalName();
+        //} else {
+        //    $pic_name = 'trihard.jpg';
+        //}
         
         $user = User::find($id);
         $user->name = $name;
-        $user->email = $email;
+        //$user->email = $email;
         $user->phone = $phone;
-        $user->password = $password;
-        $user->username = $username;
-        $user->profile_pic = '/public/berkas/'.$pic_name;
+        $user->address = $address;
+        //$user->password = $password;
+        //$user->username = $username;
+        //$user->profile_pic = '/public/berkas/'.$pic_name;
         $user->save();
 
-        return "Data berhasil di update";
+        return $user;
     }
 
     public function delete($id){
