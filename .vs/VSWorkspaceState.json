@@ -3,11 +3,8 @@
     "",
     "\\app",
     "\\app\\Http",
-    "\\app\\Http\\Controllers",
-    "\\app\\Http\\Middleware",
-    "\\app\\Providers",
     "\\routes"
   ],
-  "SelectedNode": "\\app\\Http\\Controllers\\UserController.php",
+  "SelectedNode": "\\app\\Http\\Controllers",
   "PreviewInSolutionExplorer": false
 }
