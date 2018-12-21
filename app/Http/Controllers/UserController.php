@@ -128,4 +128,17 @@ class UserController extends Controller
             ->get();
             return $trans;
     }
+
+    public function saveFCM(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        $user->fcm_token = $request->fcm_token;
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'berhasil'
+        ]);
+    }
 }

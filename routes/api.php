@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user/vendor','UserController@showVendor');
     Route::get('user/trans', 'UserController@showTransaction');
     Route::get('vendor/trans', 'UserController@showTransactionVendor');
+
+    Route::post('user/save/fcm/{id}', 'UserController@saveFCM');
 });
 
 Route::post('upload/add', 'UploadController@addFile');
