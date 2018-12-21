@@ -111,8 +111,8 @@ class UserController extends Controller
     public function showTransaction(){
         $user = request()->user();
 
-        $trans = Transaction::select('trans_det.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
-            ->join('trans_det', 'transactions.id','=','trans_det.id_trans')
+        $trans = Transaction::select('trans_dets.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
+            ->join('trans_dets', 'transactions.id','=','trans_dets.id_trans')
             ->join('users','users.id','=','transactions.id_user')
             ->where('users.id',$user['id'])
             ->get();
@@ -121,24 +121,11 @@ class UserController extends Controller
 
     public function showTransactionVendor(){
         $user = request()->user();
-        $trans = Transaction::select('trans_det.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
-            ->join('trans_det', 'transactions.id','=','trans_det.id_trans')
+        $trans = Transaction::select('trans_dets.*', 'transactions.trans_total','transactions.trans_file', 'transactions.id_user')
+            ->join('trans_dets', 'transactions.id','=','trans_dets.id_trans')
             ->join('users','users.id','=','transactions.id_user')
             ->where('transactions.id_vendor',$user['id'])
             ->get();
             return $trans;
-    }
-
-    public function saveFCM(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        $user->fcm_token = $request->fcm_token;
-        $user->save();
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'berhasil'
-        ]);
     }
 }

@@ -8,6 +8,7 @@ use App\Transaction;
 use Validator;
 use Carbon\carbon;
 use App\User;
+use App\TransDet;
 
 class TransactionController extends Controller
 {
@@ -22,10 +23,10 @@ class TransactionController extends Controller
         $validator = Validator::make($request->all(), [
             'id_user' => 'required',
             'id_vendor' => 'required',
-            // 'trans_file' => 'required',
-            'file_link' => 'required',
-            'id_status' => 'required',
-            'file_desc' => 'required'
+            'nama_file' => 'required',
+            'file_location' => 'required',
+            // 'id_status' => 'required',
+            'format_file' => 'required'
         ]);
 
         if($validator->fails()){
@@ -35,17 +36,36 @@ class TransactionController extends Controller
         $trans->id_user = $request->id_user;
         $trans->id_vendor = $request->id_vendor;
         $trans->trans_date = date("Y-m-d H:i:s");
-        $trans->file_link = $request->file_link;
-        $trans->file_desc = $request->file_desc;
         $trans->id_status = "0";
         $trans->save();
 
+        $det = new TransDet;
+        $det->id_trans = $trans->id;
+        $det->nama_file = $request->nama_file;
+        $det->format_file = $request->request_file;
+        $det->file_location = $request->file_location;
+        $det->save();
+
         $this->sendNotif($trans->id_vendor);
 
-        return response()->json($trans, $this->successStatus);
+        return response()->json($trans, $det, $this->successStatus);
 
     }
 
+    public function editTrans(request $request, $id){
+        $file_location = $request->file_location;
+        $format_file = $request->format_file;
+
+        if($request->hasFile() )
+
+        $trans = Trans::find($id);
+        $trans->file_location = $file_location;
+        $trans->format_file = $format_file;
+        $trans->save();
+
+        return response()->json($trans, $this->successStatus);
+    }
+    
     public function sendNotif($id)
     {
 
@@ -69,5 +89,6 @@ class TransactionController extends Controller
 
         $downstreamResponse = FCM::sendTo($user->fcm_token, $option, $notification, $data);
     }
+
 
 }
