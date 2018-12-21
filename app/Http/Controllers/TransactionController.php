@@ -9,6 +9,8 @@ use Validator;
 use Carbon\carbon;
 use App\User;
 use App\TransDet;
+use FCM;
+use App\Console\Commands\Tes;
 
 class TransactionController extends Controller
 {
@@ -53,15 +55,32 @@ class TransactionController extends Controller
     }
 
     public function editTrans(request $request, $id){
+
+            //'id_user' => 'required',
+            //'id_vendor' => 'required',
+            //'nama_file' => 'required',
+            //'file_location' => 'required',
+            // 'id_status' => 'required',
+            //'format_file' => 'required'
+
+        $nama_file = $request->nama_file;
         $file_location = $request->file_location;
         $format_file = $request->format_file;
+        $trans_total = $request->trans_total;
+        $id_status = $request->id_status;
 
-        if($request->hasFile() )
+        $trans = Transaction::find($id);
+        $trans->trans_total = $trans_total;
+        $trans->id_status = $id_status;
 
-        $trans = Trans::find($id);
-        $trans->file_location = $file_location;
-        $trans->format_file = $format_file;
         $trans->save();
+
+        TransDet::where('id_trans', $trans->id)
+        ->update([
+            'nama_file' => $nama_file,
+            'format_file' => $format_file,
+            'file_location' => $file_location
+        ]);
 
         return response()->json($trans, $this->successStatus);
     }
